@@ -2425,7 +2425,7 @@ link_socket_connection_initiated(const struct buffer *buf,
 {
     struct gc_arena gc = gc_new();
 
-    info->lsa->actual = *act; /* Note: skip this line for --force-dest */
+    if (!info->remote_semi_float) info->lsa->actual = *act; /* Note: skip this line for --force-dest */
     setenv_trusted(es, info);
     info->connection_established = true;
 

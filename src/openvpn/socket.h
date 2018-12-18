@@ -996,9 +996,9 @@ link_socket_set_outgoing_addr(const struct buffer *buf,
             (!info->connection_established
              || !addr_match_proto(&act->dest, &lsa->actual.dest, info->proto)
             )
-            && !info->remote_semi_float &&
+            &&
             /* address undef or address == remote or --float */
-            (info->remote_float
+            (info->remote_semi_float || info->remote_float
              || (!lsa->remote_list || addrlist_match_proto(&act->dest, lsa->remote_list, info->proto))
             )
             )
