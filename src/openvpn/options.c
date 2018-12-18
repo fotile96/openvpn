@@ -158,6 +158,8 @@ static const char usage_message[] =
     "                  Set n=\"infinite\" to retry indefinitely.\n"
     "--float         : Allow remote to change its IP address/port, such as through\n"
     "                  DHCP (this is the default if --remote is not used).\n"
+    "--semi-float    : Allow packets from IP address/port different from the one\n"
+    "                  --remote indicates.\n"
     "--ipchange cmd  : Run command cmd on remote ip address initial\n"
     "                  setting or change -- execute as: cmd ip-address port#\n"
     "--port port     : TCP/UDP port # for both local and remote.\n"
@@ -1425,6 +1427,7 @@ show_connection_entry(const struct connection_entry *o)
     SHOW_STR(remote);
     SHOW_STR(remote_port);
     SHOW_BOOL(remote_float);
+    SHOW_BOOL(remote_semi_float);
     SHOW_BOOL(bind_defined);
     SHOW_BOOL(bind_local);
     SHOW_BOOL(bind_ipv6_only);
@@ -5487,6 +5490,11 @@ add_option(struct options *options,
     {
         VERIFY_PERMISSION(OPT_P_GENERAL|OPT_P_CONNECTION);
         options->ce.remote_float = true;
+    }
+    else if (streq(p[0], "semi-float") && !p[1])
+    {
+        VERIFY_PERMISSION(OPT_P_GENERAL|OPT_P_CONNECTION);
+        options->ce.remote_semi_float = true;
     }
 #ifdef ENABLE_DEBUG
     else if (streq(p[0], "gremlin") && p[1] && !p[2])

@@ -116,6 +116,7 @@ struct link_socket_info
     const char *ipchange_command;
     const struct plugin_list *plugins;
     bool remote_float;
+    bool remote_semi_float;
     int proto;                  /* Protocol (PROTO_x defined below) */
     sa_family_t af;                     /* Address family like AF_INET, AF_INET6 or AF_UNSPEC*/
     bool bind_ipv6_only;
@@ -316,6 +317,7 @@ link_socket_init_phase1(struct link_socket *sock,
 #endif
                         bool bind_local,
                         bool remote_float,
+                        bool remote_semi_float,
                         int inetd,
                         struct link_socket_addr *lsa,
                         const char *ipchange_command,
@@ -945,7 +947,7 @@ link_socket_verify_incoming_addr(struct buffer *buf,
                 {
                     return false;
                 }
-                if (info->remote_float || (!info->lsa->remote_list))
+                if (info->remote_semi_float || info->remote_float || (!info->lsa->remote_list))
                 {
                     return true;
                 }
@@ -994,7 +996,7 @@ link_socket_set_outgoing_addr(const struct buffer *buf,
             (!info->connection_established
              || !addr_match_proto(&act->dest, &lsa->actual.dest, info->proto)
             )
-            &&
+            && !info->remote_semi_float &&
             /* address undef or address == remote or --float */
             (info->remote_float
              || (!lsa->remote_list || addrlist_match_proto(&act->dest, lsa->remote_list, info->proto))

@@ -3296,6 +3296,7 @@ do_init_socket_1(struct context *c, const int mode)
 #endif
                             c->options.ce.bind_local,
                             c->options.ce.remote_float,
+                            c->options.ce.remote_semi_float,
                             c->options.inetd,
                             &c->c1.link_socket_addr,
                             c->options.ipchange,

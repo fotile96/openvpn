@@ -1850,6 +1850,7 @@ link_socket_init_phase1(struct link_socket *sock,
 #endif
                         bool bind_local,
                         bool remote_float,
+                        bool remote_semi_float,
                         int inetd,
                         struct link_socket_addr *lsa,
                         const char *ipchange_command,
@@ -1889,6 +1890,7 @@ link_socket_init_phase1(struct link_socket *sock,
     sock->info.proto = proto;
     sock->info.af = af;
     sock->info.remote_float = remote_float;
+    sock->info.remote_semi_float = remote_semi_float;
     sock->info.lsa = lsa;
     sock->info.bind_ipv6_only = bind_ipv6_only;
     sock->info.ipchange_command = ipchange_command;
